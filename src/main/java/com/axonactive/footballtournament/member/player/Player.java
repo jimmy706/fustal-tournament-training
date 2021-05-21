@@ -21,12 +21,5 @@ public class Player extends Member{
     }
 
     private String playerNumber;
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
-
     
 }

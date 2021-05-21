@@ -1,6 +1,7 @@
 package com.axonactive.footballtournament.tournament;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -43,14 +44,22 @@ public class FutstalTournamentControlTest {
         class AfterPushPlayers{
 
             @Test
-            void isTeamMembersAtLeast7AndMaximum12() {        
+            void when_TeamMemberBetween7And12_ReturnTrue() {        
                 assertTrue(futstalTournementControl.isEnoughPlayer(testedTeam));
             }
 
             @Test
-            void testRegisterTeamForTournamentFunction() {
+            void when_RegisteredForTournament_RegisteredTeamSizeIncrease() {
                 futstalTournementControl.registerForTournement(testedTeam);
                 assertEquals(futstalTournementControl.getRegisteredTeams().size(), 1);
+            }
+
+            @Test
+            void when_FailedToRegistered_ThrowIllegalArgumentException() {
+                Team teamWithEmptyPlayer = new Team("Vim", "VI");
+                assertThrows(IllegalArgumentException.class, ()-> {
+                    futstalTournementControl.registerForTournement(teamWithEmptyPlayer);
+                });
             }
         }
     }

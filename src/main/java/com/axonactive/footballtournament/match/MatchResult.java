@@ -17,9 +17,9 @@ public class MatchResult {
     int secondTeamScore;
 
     @Getter
-    String match;
+    Match match;  
 
-    private Winner getWinner() {
+    public Winner getWinner() {
         if(firstTeamScore > secondTeamScore){
             return Winner.FIRST_TEAM;
         }

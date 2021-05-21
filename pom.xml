@@ -76,7 +76,7 @@
                                         </limit>
                                     </limits>
                                 </rule>
-                            </rules>
+                            </rules>                            
                         </configuration>
                     </execution>
                 </executions>

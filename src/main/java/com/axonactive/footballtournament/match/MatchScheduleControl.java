@@ -1,11 +1,8 @@
 package com.axonactive.footballtournament.match;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.ejb.Local;
 
 import com.axonactive.footballtournament.team.Team;
 

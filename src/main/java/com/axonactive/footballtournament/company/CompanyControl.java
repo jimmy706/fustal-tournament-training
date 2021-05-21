@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.axonactive.footballtournament.member.Member;
+import com.axonactive.footballtournament.member.player.Player;
 
 import lombok.Getter;
 
@@ -20,25 +21,25 @@ public class CompanyControl {
     }
 
     public void addNewMember(String companyId, Member newMember) {
-        for(Company company : companies) {
-            if(company.getId().equals(companyId)) {
-                company.addMember(newMember);
-            }
+        Company pickedCompany = companies.stream()
+                                    .filter(company -> company.getId().equals(companyId))
+                                    .findAny()
+                                    .orElse(null);
+        if(pickedCompany != null) {
+            pickedCompany.addMember(newMember);
         }
     }
 
-    public boolean isPlayerWorkingForCompny(Member member, String companyId) {
-        for(Company company : companies) {
-            if(company.getId().equals(companyId)) {
-                return company.getMembers().contains(member);
-            }
-        }
-        return false;
-    }
 
-    public void listCompanies() {
-        for(Company company : companies){
-            System.out.println(company);
+    public void addNewPlayer(Player newPlayer, String companyId) {
+        Company pickedCompany = companies.stream()
+                                    .filter(company -> company.getId().equals(companyId))
+                                    .findAny()
+                                    .orElse(null);
+        
+        if(pickedCompany != null) {
+            pickedCompany.addPlayer(newPlayer);
         }
     }
+    
 }
