@@ -200,9 +200,7 @@ public class MatchScheduleControlTest {
 
                 Map<String, Integer> teamScores = matchResultsControl.getTeamScores();
                 assertTrue(teamScores instanceof Map);
-                for(Map.Entry<String, Integer> scoreEntry : teamScores.entrySet()) {
-                    System.out.println(scoreEntry.getKey() + " - " + scoreEntry.getValue());
-                }
+                matchResultsControl.getSortedTeamScore(false);
             }
             
         }

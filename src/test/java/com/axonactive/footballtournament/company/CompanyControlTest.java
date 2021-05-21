@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import javax.ejb.ObjectNotFoundException;
+
 import com.axonactive.footballtournament.member.Gender;
 import com.axonactive.footballtournament.member.Member;
 import com.axonactive.footballtournament.member.player.Player;
@@ -36,7 +38,11 @@ public class CompanyControlTest {
 
         Member member = new Member("John", "Wick", 31, Gender.MALE);
 
-        companyControl.addNewMember("AAVN", member);
+        try {
+            companyControl.addNewMember("AAVN", member);
+        } catch (ObjectNotFoundException e) {
+            e.printStackTrace();
+        }
 
         companyControl.addNewPlayer(new Player(member, "09"), "AAVN");
 
@@ -54,4 +60,5 @@ public class CompanyControlTest {
             companyControl.addNewPlayer(new Player(new Member("Hello", "World", 69, Gender.FEMALE), "09"), "AAVN");
         });
     }
+
 }

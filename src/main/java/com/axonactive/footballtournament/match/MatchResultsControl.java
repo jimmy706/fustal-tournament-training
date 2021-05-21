@@ -21,8 +21,6 @@ public class MatchResultsControl implements MatchResults{
         }
     }
 
-
-
     @Override
     public void newScore(Match scoredMatch, ScoreTypes scoreTypes) {
         for(MatchResult matchResult : matchResults) {
@@ -62,5 +60,24 @@ public class MatchResultsControl implements MatchResults{
         });
 
         return response;
+    }
+    
+    public void getSortedTeamScore(boolean ASC_score) {
+        Map<String, Integer> response = getTeamScores();
+
+
+        response.entrySet().stream()
+            .sorted((entry1, entry2) -> {
+                if(ASC_score) {
+                    return entry1.getValue() - entry2.getValue();
+                }
+                else {
+                    return entry2.getValue() - entry1.getValue();
+                }
+            })
+            .forEach(entry -> {
+                System.out.println(entry.getKey() + " - " + entry.getValue());
+            });;
+                            
     }
 }
