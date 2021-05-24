@@ -17,3 +17,9 @@ Some requirements:
 - A team must have at least 7 players and maximum is 12
 
 - A player must be working for that company (each company has a team)
+
+# Docker postgress
+
+```
+docker run --name fustal-tournament -p 5432:5432 -e POSTGRES_DB=tournamentdb -e POSTGRES_USER=dqdung -e POSTGRES_PASSWORD=Jimmy^active -d postgres:13.3-alpine
+```

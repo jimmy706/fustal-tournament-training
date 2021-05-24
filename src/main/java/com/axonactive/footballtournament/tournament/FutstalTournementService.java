@@ -7,21 +7,21 @@ import com.axonactive.footballtournament.team.Team;
 
 import lombok.Getter;
 
-public class FutstalTournementControl  {
+public class FutstalTournementService  {
+
     @Getter
     private List<Team> registeredTeams;
 
-    public FutstalTournementControl() {
+    public FutstalTournementService() {
         this.registeredTeams = new ArrayList<>();
     }
 
     public void registerForTournement(Team team) {
-
-        if(isEnoughPlayer(team)) {
+        if(team.validateTeamSize()) {
             registeredTeams.add(team);
         }
         else {
-            throw new IllegalArgumentException("A team must have at least 7 players and maximum is 12");
+            throw new IllegalArgumentException("A team must have at least " + Team.MIN_PLAYER + " players and maximum is " + Team.MAX_PLAYER);
         }
     }
 

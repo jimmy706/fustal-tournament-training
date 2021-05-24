@@ -27,7 +27,7 @@ public class TeamTest {
 
     @Test
     void testAddTeamPlayersAsExpected() {
-        Player newPlayer = new Player("Stive", "Jove", 34, Gender.MALE, "09");
+        Player newPlayer = new Player("Stive", "Jove", 34, "AAVN", Gender.MALE, "09");
         List<Player> expectedPlayers = Arrays.asList(newPlayer);
         team.addPlayer(newPlayer);
 

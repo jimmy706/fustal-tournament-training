@@ -1,23 +1,46 @@
 package com.axonactive.footballtournament.match;
 
 
-import lombok.AllArgsConstructor;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import com.axonactive.footballtournament.match.scoretype.ScoreTypes;
+import com.axonactive.footballtournament.match.winner.Winner;
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-@AllArgsConstructor
+
 @ToString
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
 public class MatchResult {
-    @Getter
-    @Setter
+
+    @Column
     int firstTeamScore;
-    
-    @Getter
-    @Setter
+
+    @Column
     int secondTeamScore;
 
-    @Getter
-    Match match;  
+    @JoinColumn
+    @OneToOne
+    Match match;
+
+    @Column
+    @Id
+    private int id;
+
+    public MatchResult(int firstTeamScore, int secondTeamScore, Match match){
+        this.firstTeamScore = firstTeamScore;
+        this.secondTeamScore = secondTeamScore;
+        this.match = match;
+    }
 
     public Winner getWinner() {
         if(firstTeamScore > secondTeamScore){

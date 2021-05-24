@@ -14,14 +14,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-public class FutstalTournamentControlTest {
+public class FutstalTournamentServiceTest {
 
-    FutstalTournementControl futstalTournementControl;
+    FutstalTournementService futstalTournementControl;
     Team testedTeam;
 
     @BeforeEach
     void createInstance() {    
-        futstalTournementControl = new FutstalTournementControl();
+        futstalTournementControl = new FutstalTournementService();
         testedTeam =  new Team("Axon Active", "AAVN");    
     }
 
@@ -30,13 +30,13 @@ public class FutstalTournamentControlTest {
     class WhenCreateInstances{
         @BeforeEach
         void pushPlayersToTeam() {
-            testedTeam.addPlayer(new Player("John", "Doe", 21, Gender.MALE, "10"));
-            testedTeam.addPlayer(new Player("Hero", "Ku", 22, Gender.MALE, "09"));
-            testedTeam.addPlayer(new Player("Balt", "Gei", 23, Gender.UNKNOW, "69"));
-            testedTeam.addPlayer(new Player("Hello", "World", 21, Gender.FEMALE, "01"));
-            testedTeam.addPlayer(new Player("Jimmy", "Dan", 21, Gender.MALE, "11"));
-            testedTeam.addPlayer(new Player("Joe", "Dim", 20, Gender.FEMALE, "12"));
-            testedTeam.addPlayer(new Player("Love", "Hermes", 20, Gender.FEMALE, "20"));
+            testedTeam.addPlayer(new Player("John", "Doe", 21, "AAVN", Gender.MALE, "10"));
+            testedTeam.addPlayer(new Player("Hero", "Ku", 22, "AAVN", Gender.MALE, "09"));
+            testedTeam.addPlayer(new Player("Balt", "Gei", 23, "AAVN", Gender.UNKNOW, "69"));
+            testedTeam.addPlayer(new Player("Hello", "World", 21, "AAVN", Gender.FEMALE, "01"));
+            testedTeam.addPlayer(new Player("Jimmy", "Dan", 21, "AAVN", Gender.MALE, "11"));
+            testedTeam.addPlayer(new Player("Joe", "Dim", 20, "AAVN", Gender.FEMALE, "12"));
+            testedTeam.addPlayer(new Player("Love", "Hermes", 20, "AAVN", Gender.FEMALE, "20"));
         }
 
         @DisplayName("after push players")

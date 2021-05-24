@@ -8,8 +8,8 @@ import com.axonactive.footballtournament.team.Team;
 
 import lombok.Getter;
 
-public class MatchScheduleControl implements MatchSchedules {
-
+public class MatchScheduleService {
+    
     @Getter
     private List<Match> matches;
 
@@ -17,7 +17,7 @@ public class MatchScheduleControl implements MatchSchedules {
 
     private List<Team> registeredTeams;
 
-    public MatchScheduleControl(List<Team> registeredTeams) {
+    public MatchScheduleService(List<Team> registeredTeams) {
         this.registeredTeams = registeredTeams;
         this.markedFightTeams = new int[registeredTeams.size()];
         this.matches = new ArrayList<>();
@@ -26,7 +26,6 @@ public class MatchScheduleControl implements MatchSchedules {
         }
     }
 
-    @Override
     public void generateMatches(String location) {
         for (int i = 1; i < registeredTeams.size(); i++) {
             int left = 0;
@@ -40,7 +39,7 @@ public class MatchScheduleControl implements MatchSchedules {
                         .plusDays(i)
                         .plusMinutes((count - 1) * 25);
                 LocalDateTime endDateTime = startDateTime.plusMinutes(20);
-                Match match = new Match(firstTeam, secondTeam, startDateTime, endDateTime, location);
+                Match match = new Match(firstTeam.getName(), secondTeam.getName(), startDateTime, endDateTime, location);
 
                 matches.add(match);
                 left++;
@@ -54,7 +53,6 @@ public class MatchScheduleControl implements MatchSchedules {
 
     }
 
-    @Override
     public void viewMatchSchedules() {
         for (Match match : matches) {
             System.out.println("\n" + match + "\n");

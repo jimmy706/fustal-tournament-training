@@ -1,4 +1,4 @@
-package com.axonactive.footballtournament.match;
+package com.axonactive.footballtournament.match.scoretype;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

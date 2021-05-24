@@ -12,12 +12,12 @@ public class PlayerTest {
 
     @BeforeEach
     void createInstance() {
-        player = new Player("John", "Doe", 21, Gender.MALE, "10");
+        player = new Player("John", "Doe", 21, "AAVN", Gender.MALE, "10");
     }
 
     @Test
     void testComparePlayerAndMember() {
-        Member testedMember = new Member("John", "Doe", 21, Gender.MALE);
+        Member testedMember = new Member("John", "Doe", 21, "AAVN", Gender.MALE);
         assertEquals(player, testedMember);
     }
 
