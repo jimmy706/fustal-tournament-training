@@ -39,7 +39,7 @@ public class MatchScheduleService {
                         .plusDays(i)
                         .plusMinutes((count - 1) * 25);
                 LocalDateTime endDateTime = startDateTime.plusMinutes(20);
-                Match match = new Match(firstTeam.getName(), secondTeam.getName(), startDateTime, endDateTime, location);
+                Match match = new Match(startDateTime, endDateTime, location);
 
                 matches.add(match);
                 left++;

@@ -4,56 +4,42 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
-import com.axonactive.footballtournament.team.Team;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
+@ToString
 public class Match {
 
-    @Column
+    @Column(name = "match_id")
     @Id
+    @GeneratedValue
     private String matchId;
 
-    @Column
-    private String firstTeam;
-
-    @Column
-    private String secondTeam;
-
-
-
-    @Column(name = "start_datetime", columnDefinition = "DATETIME")
+    @Column(name = "start_datetime", columnDefinition = "TIMESTAMP")
     LocalDateTime startDateTime;
 
-    @Column(name = "end_datetime", columnDefinition = "DATETIME")
+    @Column(name = "end_datetime", columnDefinition = "TIMESTAMP")
     LocalDateTime endDateTime;
 
+    @Column
     String location;
 
-    public Match(String firstTeam, String secondTeam, LocalDateTime startDateTime, LocalDateTime endDateTime, String location ){
-        this.firstTeam = firstTeam;
-        this.secondTeam = secondTeam;
+    public Match( LocalDateTime startDateTime, LocalDateTime endDateTime, String location ){
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.location = location;
     }
 
-    @Override
-    public String toString() {
-        return "Match [endDateTime=" + endDateTime + ", firstTeam=" + firstTeam+ ", secondTeam=" + secondTeam + ", startDateTime=" + startDateTime + "]";
-    }
 
     
 }

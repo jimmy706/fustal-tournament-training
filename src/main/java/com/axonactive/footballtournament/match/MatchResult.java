@@ -3,6 +3,7 @@ package com.axonactive.footballtournament.match;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -22,18 +23,18 @@ import lombok.ToString;
 @Entity
 public class MatchResult {
 
-    @Column
+    @Column(name = "first_team_score")
     int firstTeamScore;
 
-    @Column
+    @Column(name = "second_team_score")
     int secondTeamScore;
 
-    @JoinColumn
+    @JoinColumn(name = "match")
     @OneToOne
     Match match;
 
-    @Column
     @Id
+    @GeneratedValue
     private int id;
 
     public MatchResult(int firstTeamScore, int secondTeamScore, Match match){

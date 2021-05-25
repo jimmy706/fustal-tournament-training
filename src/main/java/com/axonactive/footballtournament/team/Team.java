@@ -5,10 +5,15 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.ValidationException;
 
+import com.axonactive.footballtournament.match.Match;
 import com.axonactive.footballtournament.member.player.Player;
 
 import lombok.EqualsAndHashCode;
@@ -20,25 +25,37 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity
 @EqualsAndHashCode
 @NoArgsConstructor
+@Entity
 public class Team {
 
     public static final int MIN_PLAYER = 7;
 
     public static final int MAX_PLAYER = 12;
     
+    @Column(name = "team_name")
     String name;
 
     @Id
+    @GeneratedValue
     private int id;
     
-    @OneToMany
+    /**tell Hibernate which variable we are using to represent the parent class in our child class. */
+    @OneToMany 
+    @JoinTable(name = "Team_Players")
     List<Player> players;
 
-    @Column
+    @Column(unique = true, nullable = false, name = "company")
     private String company;
+
+    @ManyToMany
+    @JoinTable(
+        name = "Team_Match",
+        joinColumns = {@JoinColumn(name="team_id")},
+        inverseJoinColumns = {@JoinColumn(name="match_id")}
+    )
+    List<Match> matches;
 
     public Team(String name, String company) {
         this.name = name;

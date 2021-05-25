@@ -3,11 +3,12 @@ package com.axonactive.footballtournament.company;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 import com.axonactive.footballtournament.member.Member;
@@ -24,17 +25,24 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Entity
+@NamedQueries({
+    @NamedQuery(name = Company.GET_ALL_QUERY, query = "SELECT c FROM Company c")
+})
 public class Company {
 
-    @Column
+    public static final String QUALIFIER = "com.axonactive.footballtournament.company.";
+
+    public static final String GET_ALL_QUERY = QUALIFIER + "getAll";
+
+    @Column(name = "company_name")
     String name;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "company_id")
     String id;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @OneToOne
+    @JoinColumn(name = "team")
     Team team;
 
     @Id

@@ -1,11 +1,9 @@
 package com.axonactive.footballtournament.match;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.axonactive.footballtournament.company.Company;
 import com.axonactive.footballtournament.match.scoretype.ScoreTypes;

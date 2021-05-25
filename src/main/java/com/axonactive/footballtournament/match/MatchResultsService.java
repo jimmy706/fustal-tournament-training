@@ -1,12 +1,9 @@
 package com.axonactive.footballtournament.match;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.axonactive.footballtournament.match.scoretype.ScoreTypes;
-import com.axonactive.footballtournament.team.Team;
 
 import lombok.Getter;
 
