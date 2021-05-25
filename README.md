@@ -1,9 +1,11 @@
 # Build
-mvn clean package && docker build -t com.axonactive.training/footballtournament-project .
+`mvn clean package`
 
 # RUN
+`mvn wildfly-jar:run`
 
-docker rm -f footballtournament-project || true && docker run -d -p 8080:8080 -p 4848:4848 --name footballtournament-project com.axonactive.training/footballtournament-project 
+# DEV
+`mvn wildfly-jar:dev-watch`
 
 # Description
 Project: ICT futsal tournament

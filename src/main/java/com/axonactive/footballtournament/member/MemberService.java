@@ -17,6 +17,15 @@ public class MemberService {
         memberManager.persist(newMember);
     }
 
+    public Member update(Integer memberId, Member updatedMember) {
+        validateMember(updatedMember);    
+        Member persistenceMember = memberManager.find(Member.class, memberId);
+        if(persistenceMember == null) {
+            return null;
+        }
+        return memberManager.merge(persistenceMember);
+    }
+
     public List<Member> getAll() {
         TypedQuery<Member> query = memberManager.createNamedQuery(Member.GET_ALL_QUERY, Member.class);
         return query.getResultList();
@@ -40,4 +49,17 @@ public class MemberService {
 
         return query.getResultList();
     }
+
+    public boolean delete(Integer id) {
+        Member member = memberManager.find(Member.class, id);
+        if(member != null) {
+            memberManager.remove(member);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    
 }
