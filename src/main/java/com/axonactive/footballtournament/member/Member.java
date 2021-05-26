@@ -2,6 +2,7 @@ package com.axonactive.footballtournament.member;
 
 import java.util.Objects;
 
+import javax.jms.Message;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -10,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,12 +36,17 @@ public class Member {
     private int id;
 
     @Column(nullable = false, name="first_name")
+    @NotNull(message = MemberMessage.FIRST_NAME_REQUIRED)
     private String firstName;
 
     @Column(nullable = false, name="last_name")
+    @NotNull(message = MemberMessage.LAST_NAME_REQUIRED)
     String lastName;
 
-    @Column(name="age")
+    @Column(name="age",nullable = false)
+    @NotNull(message = MemberMessage.AGE_REQUIRED)
+    @Min(value = 18, message = MemberMessage.AGE_SCOPE)
+    @Max(value = 60, message = MemberMessage.AGE_SCOPE)
     int age;
 
     @Column(name = "social_insurance_id")

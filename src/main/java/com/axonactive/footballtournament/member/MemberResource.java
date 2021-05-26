@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -33,12 +34,15 @@ public class MemberResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addMember(Player newMember) {
-        memberService.add(newMember);
-        URI uri = uriInfo.getAbsolutePathBuilder().path(Integer.toString(newMember.getId())).build();
-        return Response.created(uri).entity(newMember).build();
+    public Response addMember(@Valid Player newMember) {
+        try {
+            memberService.add(newMember);
+            URI uri = uriInfo.getAbsolutePathBuilder().path(Integer.toString(newMember.getId())).build();
+            return Response.created(uri).entity(newMember).build();
+        } catch (Exception e) {
+            return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
-
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -51,7 +55,7 @@ public class MemberResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMemberById(@PathParam("id") Integer memberId) {
         Player member = memberService.getById(memberId);
-        if(Objects.isNull(member)) {
+        if (Objects.isNull(member)) {
             return Response.status(Status.NOT_FOUND).entity("Member not found").build();
         }
         return Response.ok(member).build();
@@ -62,7 +66,7 @@ public class MemberResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteMemberById(@PathParam("id") Integer memberId) {
         boolean deleted = memberService.delete(memberId);
-        if(deleted) {
+        if (deleted) {
             return Response.ok("Member deleted").build();
         }
         return Response.status(Status.NOT_FOUND).entity("Member not found").build();
@@ -72,13 +76,12 @@ public class MemberResource {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateMember(@PathParam("id") Integer memberId, Player updatedMember) {
-        Player response = memberService.update(memberId, updatedMember); 
+    public Response updateMember(@PathParam("id") Integer memberId,@Valid Player updatedMember) {
+        Player response = memberService.update(memberId, updatedMember);
 
-        if(response != null) {
+        if (response != null) {
             return Response.ok(response).build();
-        }
-        else {
+        } else {
             return Response.status(Status.NOT_FOUND).entity("Member not found").build();
         }
     }

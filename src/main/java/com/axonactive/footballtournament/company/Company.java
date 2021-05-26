@@ -1,6 +1,7 @@
 package com.axonactive.footballtournament.company;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 import com.axonactive.footballtournament.member.Member;
 import com.axonactive.footballtournament.member.player.Player;
@@ -26,22 +28,28 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @NamedQueries({
-    @NamedQuery(name = Company.GET_ALL_QUERY, query = "SELECT c FROM Company c")
+    @NamedQuery(name = Company.GET_ALL_QUERY, query = "SELECT c FROM Company c"),
+    @NamedQuery(name = Company.GET_BY_ID, query = "SELECT c FROM Company c WHERE c.id =:companyId")
 })
+@ValidCompany
 public class Company {
 
     public static final String QUALIFIER = "com.axonactive.footballtournament.company.";
 
     public static final String GET_ALL_QUERY = QUALIFIER + "getAll";
 
+    public static final String GET_BY_ID = QUALIFIER + "getById";
+
     @Column(name = "company_name")
+    @NotNull(message = CompanyMessage.COMPANY_NAME_REQUIRED)
     String name;
 
     @Column(unique = true, name = "company_id")
+    @NotNull(message = CompanyMessage.COMPANY_ID_REQUIRED)
     String id;
 
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "team")
     Team team;
 

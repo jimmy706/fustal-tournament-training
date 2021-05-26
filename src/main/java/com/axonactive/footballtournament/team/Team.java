@@ -58,7 +58,7 @@ public class Team {
     @JoinTable(name = "Team_Players")
     List<Player> players;
 
-    @Column( nullable = false, name = "company")
+    @Column( nullable = false, name = "company", unique = true)
     private String company;
 
     @ManyToMany
