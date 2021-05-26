@@ -79,14 +79,14 @@
                     <layers>
                         <layer>ejb</layer>
                         <layer>jaxrs-server</layer>
-                        <layer>h2-driver</layer>
-                        <!-- <layer>postgresql-driver</layer> -->
+                        <!-- <layer>h2-driver</layer> -->
+                        <layer>postgresql-driver</layer>
                     </layers>
                     <cli-sessions>
                         <cli-session>
                             <script-files>
-                                <script>src/main/resources/META-INF/setup-h2-datasource.cli</script>
-                                <!-- <script>src/test/resources/setup-postgres-datasource.cli</script> -->
+                                <!-- <script>src/main/resources/META-INF/setup-h2-datasource.cli</script> -->
+                                <script>src/main/resources/META-INF/setup-postgres-datasource.cli</script>
                             </script-files>
                             <resolve-expressions>false</resolve-expressions>
                         </cli-session>

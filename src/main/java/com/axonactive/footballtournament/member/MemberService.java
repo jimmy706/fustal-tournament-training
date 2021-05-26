@@ -8,26 +8,34 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.validation.ValidationException;
 
+import com.axonactive.footballtournament.member.player.Player;
+
 public class MemberService {
     @PersistenceContext
     private EntityManager memberManager;
 
-    public void add(Member newMember) {
+    public void add(Player newMember) {
         validateMember(newMember);
         memberManager.persist(newMember);
     }
 
-    public Member update(Integer memberId, Member updatedMember) {
+    public Player update(Integer memberId, Player updatedMember) {
         validateMember(updatedMember);    
-        Member persistenceMember = memberManager.find(Member.class, memberId);
+        Player persistenceMember = memberManager.find(Player.class, memberId);
         if(persistenceMember == null) {
             return null;
         }
+
+        persistenceMember.setAge(updatedMember.getAge());
+        persistenceMember.setFirstName(updatedMember.getFirstName());
+        persistenceMember.setLastName(updatedMember.getLastName());
+        persistenceMember.setGender(updatedMember.getGender() != null ? updatedMember.getGender() : Gender.UNKNOW);
+
         return memberManager.merge(persistenceMember);
     }
 
     public List<Member> getAll() {
-        TypedQuery<Member> query = memberManager.createNamedQuery(Member.GET_ALL_QUERY, Member.class);
+        TypedQuery<Member> query = memberManager.createNamedQuery(Player.GET_ALL_QUERY, Member.class);
         return query.getResultList();
     }
 
@@ -40,18 +48,18 @@ public class MemberService {
         }
     }
 
-    public Member getById(Integer id) {
-        return memberManager.find(Member.class, id);
+    public Player getById(Integer id) {
+        return memberManager.find(Player.class, id);
     }
 
-    public List<Member> getMemberFromCompany(String companyId) {
-        TypedQuery<Member> query = memberManager.createNamedQuery(Member.GET_BY_COMPANY, Member.class);
+    public List<Player> getMemberFromCompany(String companyId) {
+        TypedQuery<Player> query = memberManager.createNamedQuery(Player.GET_BY_COMPANY, Player.class);
 
         return query.getResultList();
     }
 
     public boolean delete(Integer id) {
-        Member member = memberManager.find(Member.class, id);
+        Player member = memberManager.find(Player.class, id);
         if(member != null) {
             memberManager.remove(member);
             return true;

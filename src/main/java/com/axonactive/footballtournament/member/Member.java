@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,16 +23,9 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@NamedQueries({
-    @NamedQuery(name=Member.GET_ALL_QUERY, query = "SELECT m FROM Member m"),
-    @NamedQuery(name=Member.GET_BY_COMPANY, query = "SELECT m FROM Member m WHERE m.socialInsuranceId = :companyId")
-})
+
 public class Member {    
-    public static final String QUALIFIER = "com.axonactive.footballtournament.member.";
-
-    public static final String GET_ALL_QUERY = QUALIFIER + "getAll";
-
-    public static final String GET_BY_COMPANY = QUALIFIER + "getByCompany";
+   
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

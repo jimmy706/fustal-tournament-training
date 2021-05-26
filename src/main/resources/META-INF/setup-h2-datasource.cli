@@ -1,1 +1,1 @@
-data-source add --jndi-name=java:/TournamentDS --name=TournamentDS --connection-url=jdbc:h2:mem:tournamentdb --driver-name=h2 --user-name=admin --password=aavn1234
+data-source add --jndi-name=java:/TournamentDS --name=TournamentDS --connection-url=jdbc:h2:file:./target/h2/tournamentdb --driver-name=h2 --user-name=admin --password=aavn1234

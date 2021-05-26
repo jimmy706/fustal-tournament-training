@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.ValidationException;
 
@@ -28,7 +30,17 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
+@NamedQueries({
+    @NamedQuery(name = Team.GET_ALL_QUERY, query = "SELECT t FROM Team t"),
+    // @NamedQuery(name = Team.GET_ALL_BY_MATCH, query = "SELECT t FROM Team t WHERE t.matches.matchId = :matchId")
+})
 public class Team {
+
+    public static final String QUALIFIER = "com.axonactive.footballtournament.team.";
+
+    public static final String GET_ALL_QUERY = QUALIFIER + "getAll";
+
+    public static final String GET_ALL_BY_MATCH = QUALIFIER + "getAllByMatch";
 
     public static final int MIN_PLAYER = 7;
 
@@ -46,7 +58,7 @@ public class Team {
     @JoinTable(name = "Team_Players")
     List<Player> players;
 
-    @Column(unique = true, nullable = false, name = "company")
+    @Column( nullable = false, name = "company")
     private String company;
 
     @ManyToMany
@@ -61,6 +73,7 @@ public class Team {
         this.name = name;
         this.company = company;
         this.players = new ArrayList<>();
+        this.matches = new ArrayList<>();
     }
 
     
@@ -68,6 +81,7 @@ public class Team {
         this.name = name;
         this.company = company;
         this.players = players;
+        this.matches = new ArrayList<>();
     }
 
     public void addPlayer(Player newPlayer) {
@@ -87,4 +101,7 @@ public class Team {
         return players.size() < 12;
     }
 
+    public boolean validate() {
+        return this.players != null && !this.name.isEmpty() && this.matches != null && !this.company.isEmpty();
+    }
 }

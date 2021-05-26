@@ -23,5 +23,5 @@ Some requirements:
 # Docker postgress
 
 ```
-docker run --name fustal-tournament -p 5432:5432 -e POSTGRES_DB=tournamentdb -e POSTGRES_USER=dqdung -e POSTGRES_PASSWORD=Jimmy^active -d postgres:13.3-alpine
+docker run --name fustal-tournament -p 5432:5432 -e POSTGRES_DB=tournamentdb -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=aavn1234 -d postgres:13.3-alpine
 ```

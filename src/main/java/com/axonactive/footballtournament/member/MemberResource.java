@@ -19,6 +19,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
+import com.axonactive.footballtournament.member.player.Player;
+
 @Path("members")
 @Stateless
 public class MemberResource {
@@ -31,7 +33,7 @@ public class MemberResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addMember(Member newMember) {
+    public Response addMember(Player newMember) {
         memberService.add(newMember);
         URI uri = uriInfo.getAbsolutePathBuilder().path(Integer.toString(newMember.getId())).build();
         return Response.created(uri).entity(newMember).build();
@@ -48,7 +50,7 @@ public class MemberResource {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMemberById(@PathParam("id") Integer memberId) {
-        Member member = memberService.getById(memberId);
+        Player member = memberService.getById(memberId);
         if(Objects.isNull(member)) {
             return Response.status(Status.NOT_FOUND).entity("Member not found").build();
         }
@@ -70,8 +72,8 @@ public class MemberResource {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateMember(@PathParam("id") Integer memberId, Member updatedMember) {
-        Member response = memberService.update(memberId, updatedMember); 
+    public Response updateMember(@PathParam("id") Integer memberId, Player updatedMember) {
+        Player response = memberService.update(memberId, updatedMember); 
 
         if(response != null) {
             return Response.ok(response).build();
