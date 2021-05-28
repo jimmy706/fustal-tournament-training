@@ -1,14 +1,16 @@
 package com.axonactive.footballtournament.company;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
-import javax.validation.ConstraintViolationException;
+
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -41,14 +43,20 @@ public class CompanyResource {
 
             return Response.created(uri).entity(newCompany).build();
         }      
-        catch(ConstraintViolationException e) {
-            return Response.status(Status.BAD_REQUEST).entity(CompanyMessage.COMPANY_ID_EXISTED).build();
+        catch(ValidationException e) {
+            return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+        catch(IllegalArgumentException e) {
+            return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
 
     @GET
-    public List<Company> getAll() {
-        return companyService.getAll();
+    public Response getAll() {
+        List<Company> companies = companyService.getAll();
+
+        System.out.println(companies);
+        return Response.ok(companies).build();
     }
 
     @GET
@@ -57,7 +65,9 @@ public class CompanyResource {
         try {
             Optional<Company> companyOpt = Optional.of(companyService.getById(companyId));
             if(companyOpt.isPresent()) {
-                return Response.ok(companyOpt.get()).build();
+                Company company = companyOpt.get();
+                CompanyDetail companyDetail = new CompanyDetail(company.getId(), company.getName(), company.getKeyId(), company.getTeam().getPlayers());
+                return Response.ok(companyDetail).build();
             }
             else {
                 return Response.status(Status.NOT_FOUND).entity(CompanyMessage.COMPANY_NOT_FOUND).build();

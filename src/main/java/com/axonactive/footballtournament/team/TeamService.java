@@ -7,6 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.validation.ValidationException;
+import javax.ws.rs.NotFoundException;
+
+import com.axonactive.footballtournament.member.player.Player;
 
 public class TeamService {
     
@@ -37,6 +40,32 @@ public class TeamService {
         }
         else if(!team.validate()) {
             throw new ValidationException("Some field is missing or wrong");
+        }
+    }
+
+    public void addPlayer(Integer teamId, Integer playerId) {
+        Team team = teamManager.find(Team.class, teamId);
+        if(!Objects.isNull(team)) {
+            Player addedPlayer = teamManager.find(Player.class, playerId);
+            if(!Objects.isNull(addedPlayer)) {
+                team.addPlayer(addedPlayer);
+            }
+            else {
+                throw new NotFoundException("Player not found");
+            }
+        }
+        else {
+            throw new NotFoundException("Team not found");
+        }
+    }
+
+    public List<Player> getTeamPlayers(Integer teamId) {
+        Team team = teamManager.find(Team.class, teamId);
+        if(!Objects.isNull(team)) { 
+            return team.getPlayers();
+        }
+        else {
+            throw new NotFoundException("Team not found");
         }
     }
 

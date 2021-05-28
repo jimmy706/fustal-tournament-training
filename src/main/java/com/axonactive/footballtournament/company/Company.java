@@ -49,7 +49,7 @@ public class Company {
     String id;
 
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "team")
     Team team;
 
@@ -76,4 +76,10 @@ public class Company {
     public boolean isWorkingForCompany(Member member) {
         return id.equals(member.getSocialInsuranceId());
     }
+
+    public boolean isValid() {
+        return name != null && !name.isEmpty() && id != null && !id.isEmpty();
+    }
+
+ 
 }

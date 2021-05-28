@@ -3,9 +3,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.validation.ValidationException;
 
 import com.axonactive.footballtournament.team.Team;
 import com.axonactive.footballtournament.team.TeamService;
@@ -18,10 +18,14 @@ public class CompanyService {
 
     @Inject
     TeamService teamService;
-
+    
     public void add(Company newCompany) {
+        validateAddedCompany(newCompany);
+        Team newTeam = new Team(newCompany.getName(), newCompany.getId());
+        newCompany.setTeam(newTeam);
+
         companyManager.persist(newCompany);
-        teamService.add(new Team(newCompany.getName(), newCompany.getId()));
+
     }
 
     public List<Company> getAll() {
@@ -48,4 +52,21 @@ public class CompanyService {
       
     }
     
+    public void validateAddedCompany(Company newCompany) {
+        if(newCompany == null) {
+            throw new IllegalArgumentException("Something is missing");
+        }    
+        
+        if(!newCompany.isValid()) {
+            throw new ValidationException("Some field is missing or null");
+        }
+
+        boolean isCompanyExisted = !companyManager.
+            createNamedQuery(Company.GET_BY_ID, Company.class)
+            .setParameter("companyId", newCompany.getId())
+            .getResultList().isEmpty();
+        if(isCompanyExisted) {
+            throw new ValidationException(CompanyMessage.COMPANY_ID_EXISTED);
+        }
+    }
 }

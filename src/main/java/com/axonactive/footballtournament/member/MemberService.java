@@ -6,7 +6,6 @@ import java.util.Objects;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.validation.ValidationException;
 
 import com.axonactive.footballtournament.member.player.Player;
 
@@ -42,10 +41,7 @@ public class MemberService {
     private void validateMember(Member member) {
         if(Objects.isNull(member)) {
             throw new IllegalArgumentException("Member missing");
-        }
-        else if(!member.isValid()) {
-            throw new ValidationException("Some field is missing or wrong");
-        }
+        }      
     }
 
     public Player getById(Integer id) {

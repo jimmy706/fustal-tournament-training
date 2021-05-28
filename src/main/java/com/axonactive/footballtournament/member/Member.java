@@ -1,8 +1,5 @@
 package com.axonactive.footballtournament.member;
 
-import java.util.Objects;
-
-import javax.jms.Message;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -27,7 +24,6 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-
 public class Member {    
    
 
@@ -73,10 +69,5 @@ public class Member {
     public String getFullName() {
         return getFirstName() + " " + getLastName();
     }
-
-    public boolean isValid() {
-        return getFullName().length() > 0 && age > 18 && age < 60;
-    }
-    
 
 }

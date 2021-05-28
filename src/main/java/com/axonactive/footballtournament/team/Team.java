@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,8 +14,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.ValidationException;
 
+import com.axonactive.footballtournament.company.Company;
 import com.axonactive.footballtournament.match.Match;
 import com.axonactive.footballtournament.member.player.Player;
 
@@ -32,7 +35,6 @@ import lombok.ToString;
 @Entity
 @NamedQueries({
     @NamedQuery(name = Team.GET_ALL_QUERY, query = "SELECT t FROM Team t"),
-    // @NamedQuery(name = Team.GET_ALL_BY_MATCH, query = "SELECT t FROM Team t WHERE t.matches.matchId = :matchId")
 })
 public class Team {
 
@@ -61,13 +63,14 @@ public class Team {
     @Column( nullable = false, name = "company", unique = true)
     private String company;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "Team_Match",
         joinColumns = {@JoinColumn(name="team_id")},
         inverseJoinColumns = {@JoinColumn(name="match_id")}
     )
     List<Match> matches;
+
 
     public Team(String name, String company) {
         this.name = name;
@@ -103,5 +106,9 @@ public class Team {
 
     public boolean validate() {
         return this.players != null && !this.name.isEmpty() && this.matches != null && !this.company.isEmpty();
+    }
+
+    public void addMatch(Match addedMatch) {
+        this.matches.add(addedMatch);
     }
 }
