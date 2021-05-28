@@ -43,12 +43,15 @@ public class TeamService {
         }
     }
 
-    public void addPlayer(Integer teamId, Integer playerId) {
+    public Team addPlayer(Integer teamId, Integer playerId) {
         Team team = teamManager.find(Team.class, teamId);
         if(!Objects.isNull(team)) {
             Player addedPlayer = teamManager.find(Player.class, playerId);
             if(!Objects.isNull(addedPlayer)) {
                 team.addPlayer(addedPlayer);
+
+                teamManager.merge(team);
+                return team;
             }
             else {
                 throw new NotFoundException("Player not found");

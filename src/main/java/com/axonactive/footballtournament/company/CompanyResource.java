@@ -42,11 +42,9 @@ public class CompanyResource {
             URI uri = uriInfo.getAbsolutePathBuilder().path(newCompany.getId()).build();
 
             return Response.created(uri).entity(newCompany).build();
-        }      
-        catch(ValidationException e) {
+        } catch (ValidationException e) {
             return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
-        }
-        catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
@@ -55,7 +53,6 @@ public class CompanyResource {
     public Response getAll() {
         List<Company> companies = companyService.getAll();
 
-        System.out.println(companies);
         return Response.ok(companies).build();
     }
 
@@ -64,20 +61,20 @@ public class CompanyResource {
     public Response getById(@PathParam("company_id") String companyId) {
         try {
             Optional<Company> companyOpt = Optional.of(companyService.getById(companyId));
-            if(companyOpt.isPresent()) {
+            if (companyOpt.isPresent()) {
                 Company company = companyOpt.get();
-                CompanyDetail companyDetail = new CompanyDetail(company.getId(), company.getName(), company.getKeyId(), company.getTeam().getPlayers());
+                CompanyDetail companyDetail = new CompanyDetail(company.getId(), company.getName(), company.getKeyId(),
+                        company.getTeam().getPlayers());
+                System.out.println(companyDetail);
                 return Response.ok(companyDetail).build();
-            }
-            else {
+            } else {
                 return Response.status(Status.NOT_FOUND).entity(CompanyMessage.COMPANY_NOT_FOUND).build();
             }
-        }
-        catch(NoResultException e) {
+        } catch (NoResultException e) {
             /**
              * Handle company not found
              */
-            return Response.status(Status.NOT_FOUND).entity(CompanyMessage.COMPANY_NOT_FOUND).build();            
+            return Response.status(Status.NOT_FOUND).entity(CompanyMessage.COMPANY_NOT_FOUND).build();
         }
     }
 
