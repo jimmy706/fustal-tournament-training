@@ -1,9 +1,9 @@
 package com.axonactive.footballtournament.company;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -52,8 +52,10 @@ public class CompanyResource {
     @GET
     public Response getAll() {
         List<Company> companies = companyService.getAll();
-
-        return Response.ok(companies).build();
+        
+        return Response.ok(companies.stream().map(company -> {
+            return new CompanyListItem(company.getKeyId(), company.getName(), company.getId());
+        }).collect(Collectors.toList())).build();
     }
 
     @GET

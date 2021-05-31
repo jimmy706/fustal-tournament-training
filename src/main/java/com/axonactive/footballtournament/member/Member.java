@@ -45,7 +45,7 @@ public class Member {
     @Max(value = 60, message = MemberMessage.AGE_SCOPE)
     int age;
 
-    @Column(name = "social_insurance_id")
+    @Column(name = "social_insurance_id", unique = true)
     private String socialInsuranceId;    
 
     @Convert(converter = GenderPersistenceConverter.class)
@@ -70,4 +70,7 @@ public class Member {
         return getFirstName() + " " + getLastName();
     }
 
+    public boolean _isWorkForCompany(String companyId) {
+        return socialInsuranceId.split("_")[0].equals(companyId);
+    }
 }

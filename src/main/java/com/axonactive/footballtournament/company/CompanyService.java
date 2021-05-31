@@ -57,7 +57,7 @@ public class CompanyService {
             throw new IllegalArgumentException("Something is missing");
         }    
         
-        if(!newCompany.isValid()) {
+        if(!newCompany._isValid()) {
             throw new ValidationException("Some field is missing or null");
         }
 

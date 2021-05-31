@@ -74,10 +74,10 @@ public class Company {
     }
 
     public boolean isWorkingForCompany(Member member) {
-        return id.equals(member.getSocialInsuranceId());
+        return member._isWorkForCompany(id);
     }
 
-    public boolean isValid() {
+    public boolean _isValid() {
         return name != null && !name.isEmpty() && id != null && !id.isEmpty();
     }
 

@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import javax.validation.ValidationException;
 import javax.ws.rs.NotFoundException;
 
+import com.axonactive.footballtournament.company.Company;
 import com.axonactive.footballtournament.member.player.Player;
 
 public class TeamService {
@@ -43,8 +44,8 @@ public class TeamService {
         }
     }
 
-    public Team addPlayer(Integer teamId, Integer playerId) {
-        Team team = teamManager.find(Team.class, teamId);
+    public Company addPlayer(Integer teamId, Integer playerId) {
+        Company team = teamManager.find(Company.class, teamId);
         if(!Objects.isNull(team)) {
             Player addedPlayer = teamManager.find(Player.class, playerId);
             if(!Objects.isNull(addedPlayer)) {

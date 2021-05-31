@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
+import com.axonactive.footballtournament.company.Company;
 import com.axonactive.footballtournament.member.player.Player;
 
 @Stateless
@@ -39,7 +40,7 @@ public class TeamResource {
         System.out.println("Team id: " + teamId + " " + "Player id: " + playerId);
 
         try {
-            Team team = teamService.addPlayer(teamId, playerId);
+            Company team = teamService.addPlayer(teamId, playerId);
 
  
             System.out.println("package com.axonactive.footballtournament.team.addPlayerToTeam Response: \n" + team);
@@ -47,6 +48,8 @@ public class TeamResource {
             return Response.ok(team).build();
         } catch (NotFoundException e) {
             return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
+        } catch(IllegalArgumentException e) {
+            return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
 

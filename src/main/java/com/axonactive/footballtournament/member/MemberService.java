@@ -2,6 +2,7 @@ package com.axonactive.footballtournament.member;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -48,10 +49,12 @@ public class MemberService {
         return memberManager.find(Player.class, id);
     }
 
-    public List<Player> getMemberFromCompany(String companyId) {
-        TypedQuery<Player> query = memberManager.createNamedQuery(Player.GET_BY_COMPANY, Player.class);
+    public List<Member> getMemberFromCompany(String companyId) {
+        TypedQuery<Member> query = memberManager.createNamedQuery(Player.GET_ALL_QUERY, Member.class);
+        List<Member> members = query.getResultList();
+        
 
-        return query.getResultList();
+        return members.stream().filter(player -> player._isWorkForCompany(companyId)).collect(Collectors.toList());
     }
 
     public boolean delete(Integer id) {

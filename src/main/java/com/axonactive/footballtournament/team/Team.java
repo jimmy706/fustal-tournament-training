@@ -88,7 +88,7 @@ public class Team {
     }
 
     public void addPlayer(Player newPlayer) {
-        if(isAddable()){
+        if(_isAddable()){
             players.add(newPlayer);
         }
         else {
@@ -100,7 +100,7 @@ public class Team {
         return players.size() >= MIN_PLAYER && players.size() <= MAX_PLAYER;
     }
 
-    public boolean isAddable() {
+    public boolean _isAddable() {
         return players.size() < 12;
     }
 
