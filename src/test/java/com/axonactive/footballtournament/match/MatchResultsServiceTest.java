@@ -145,33 +145,33 @@ public class MatchResultsServiceTest {
 
             }
 
-            @Test
-            void when_TeamMakeScore_MatchResultChanged() {
-                List<Match> matches = matchScheduleControl.getMatches();
+            // @Test
+            // void when_TeamMakeScore_MatchResultChanged() {
+            //     List<Match> matches = matchScheduleControl.getMatches();
 
-                MatchResultsService matchResultsControl = new MatchResultsService(matches);
-                matchResultsControl.newScore(matches.get(0), ScoreTypes.FIRST_TEAM_SCORE);
+            //     MatchResultsService matchResultsControl = new MatchResultsService(matches);
+            //     matchResultsControl.newScore(matches.get(0), ScoreTypes.FIRST_TEAM_SCORE);
 
-                List<MatchResult> matchResults = matchResultsControl.getMatchResults();
+            //     List<MatchResult> matchResults = matchResultsControl.getMatchResults();
 
-                assertEquals(1, matchResults.get(0).getFirstTeamScore());
+            //     assertEquals(1, matchResults.get(0).getFirstTeamScore());
 
-                assertEquals(Winner.FIRST_TEAM, matchResults.get(0).getWinner());;
+            //     assertEquals(Winner.FIRST_TEAM, matchResults.get(0).getWinner());;
 
-                matchResultsControl.newScore(matches.get(0), ScoreTypes.SECOND_TEAM_SCORE);
-                matchResultsControl.newScore(matches.get(0), ScoreTypes.SECOND_TEAM_SCORE);
+            //     matchResultsControl.newScore(matches.get(0), ScoreTypes.SECOND_TEAM_SCORE);
+            //     matchResultsControl.newScore(matches.get(0), ScoreTypes.SECOND_TEAM_SCORE);
 
-                assertEquals(Winner.SECOND_TEAM, matchResults.get(0).getWinner());
-            }
+            //     assertEquals(Winner.SECOND_TEAM, matchResults.get(0).getWinner());
+            // }
 
-            @Test
-            void when_2TeamScoresEqual_ExpectedDraw() {
-                MatchResultsService matchResultsControl = new MatchResultsService(matchScheduleControl.getMatches());
+            // @Test
+            // void when_2TeamScoresEqual_ExpectedDraw() {
+            //     MatchResultsService matchResultsControl = new MatchResultsService(matchScheduleControl.getMatches());
 
-                List<MatchResult> matchResults = matchResultsControl.getMatchResults();
+            //     List<MatchResult> matchResults = matchResultsControl.getMatchResults();
 
-                assertEquals(Winner.DRAW, matchResults.get(0).getWinner());
-            }
+            //     assertEquals(Winner.DRAW, matchResults.get(0).getWinner());
+            // }
 
             // @Test
             // void when_RequestTeamScore_GetMapOfTeamAndScore() {
