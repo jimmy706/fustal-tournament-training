@@ -6,17 +6,21 @@ pipeline {
     stages {
         stage ('Initialize') {
             steps {
-                sh 'java --version'
+                step {
+                    sh 'java --version'
+                }
             }
         }
 
         stage ('Build') {
             steps {
-                sh 'mvn -Dmaven.test.failure.ignore=true install' 
+                step {
+                    sh 'mvn -Dmaven.test.failure.ignore=true install'
+                }
             }
             post {
                 success {
-                    junit 'target/surefire-reports/**/*.xml' 
+                    junit 'target/surefire-reports/**/*.xml'
                 }
             }
         }
