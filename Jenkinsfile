@@ -4,13 +4,19 @@ pipeline {
         maven 'maven'
     }
     stages {
-        stage('Build') {
+        stage ('Initialize') {
             steps {
-                sh 'mvn -Dmaven.test.failure.ignore=true install'
+                sh 'java --version'
+            }
+        }
+
+        stage ('Build') {
+            steps {
+                sh 'mvn -Dmaven.test.failure.ignore=true install' 
             }
             post {
                 success {
-                    junit 'target/surefire-reports/**/*.xml'
+                    junit 'target/surefire-reports/**/*.xml' 
                 }
             }
         }
